@@ -1,4 +1,3 @@
-import configuredAxios from "../axios.config";
 import { LoaderService } from "../../../services/loader.service";
 import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
@@ -17,5 +16,3 @@ export const loaderResponseInterceptorLogic = [
         return response;
     }
 ]
-
-export const customAxios = configuredAxios

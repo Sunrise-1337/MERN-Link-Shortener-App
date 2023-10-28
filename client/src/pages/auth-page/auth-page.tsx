@@ -27,14 +27,6 @@ export const AuthPage = () => {
                                variant="outlined" className='auth__input' type='password'
                                name='password' value={form.values.email}
                                onChange={form.handleChange}/>
-                    {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    adjective
-                    </Typography>
-                    <Typography variant="body2">
-                    well meaning and kindly.
-                    <br />
-                    {'"a benevolent smile"'}
-                    </Typography> */}
                 </CardContent>
                 <CardActions>
                     <Button size="medium" variant="contained" className='auth__login'>Log in</Button>

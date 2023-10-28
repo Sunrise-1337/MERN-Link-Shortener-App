@@ -1,21 +1,22 @@
+import { AlertColor } from '@mui/material';
 import { makeAutoObservable } from 'mobx'
 
 class SnackBarStore {
     message: string = '';
-    type: string = '';
+    type: AlertColor = 'error';
 
     constructor(){
         makeAutoObservable(this)
     }
 
-    toShowSnackBar (message: string, type: string): void{
-        this.message = message;
+    toShowSnackBar (message: string = '', type: AlertColor): void{
+        this.message = message || 'Something went wrong, please try again later';
         this.type = type;
     }
 
     toHideSnackBar (): void{
         this.message = '';
-        this.type = '';
+        this.type = 'error';
     }
 }
 
