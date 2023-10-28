@@ -1,0 +1,42 @@
+.auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+
+    &__card{
+        min-width: 275px;
+        width: 60vw;
+        max-width: 450px;
+        padding-top: 20px;
+    }
+
+    .MuiCardContent-root{
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        min-height: 60vh;
+        height: fit-content;
+    }
+
+    &__signup{
+        background-color: #fff !important;
+        color: black !important;
+    }
+
+    &__login{
+        color: white !important;
+        background-color: gray !important;
+    }
+
+    &__input{
+        width: 80% !important;
+        margin-bottom: 30px !important;
+    }
+
+    &__title{
+        margin-bottom: 50px !important;
+    }
+}
