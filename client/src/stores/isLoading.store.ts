@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx'
+import SnackbarStore from './snackbar.store';
 
 class IsLoadingStore {
     isLoading: boolean = false;
@@ -7,11 +8,12 @@ class IsLoadingStore {
         makeAutoObservable(this)
     }
 
-    toSetLoadingInTrue(): void{
+    toSetLoadingTrue(): void{
+        if (SnackbarStore.message) SnackbarStore.toHideSnackBar()
         this.isLoading = true
     }
 
-    toSetLoadingInFalse(): void{
+    toSetLoadingFalse(): void{
         this.isLoading = false
     }
 }

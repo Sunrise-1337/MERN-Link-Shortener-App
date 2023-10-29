@@ -5,6 +5,7 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const router = Router()
+const { toConcatErrors, toHandleValidationErrors } = require('./helpers/error-handling.helper')
 
 // /api/auth
 router.post(
@@ -19,7 +20,7 @@ router.post(
         try {
             const errors = validationResult(req)
 
-            toHandleValidationErrors(res, errors)
+            if (toHandleValidationErrors(res, errors)) return
 
             const {email, password} = req.body
 
@@ -66,7 +67,7 @@ router.post(
         try {
             const errors = validationResult(req)
 
-            toHandleValidationErrors(res, errors)
+            if (toHandleValidationErrors(res, errors)) return
 
             const {email, password} = req.body
 
@@ -92,7 +93,8 @@ router.post(
 
             res.json({
                 token: toGetJwtToken(user.id),
-                userId: user.id
+                userId: user.id,
+                message: "You've successfully logged in"
             })
 
         } catch (e) {

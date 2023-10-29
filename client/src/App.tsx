@@ -19,23 +19,33 @@ import { Footer } from './shared/components/footer/footer';
 import { Header } from './shared/components/header/header';
 import { Loader } from './shared/components/loader/loader';
 
+
+import { VariableConstants } from './constants/variables.constants';
+
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
-
+import Slide, { SlideProps } from '@mui/material/Slide';
 
 function App() {
   useEffect(() => {
     // isLoggedIn = false
   }, [])
 
-  const handleSnackBarClose = (_event: React.SyntheticEvent | Event, reason?: string) => {
+  const handleSnackBarClose = (_event: React.SyntheticEvent | Event, reason?: string): void => {
     if (reason === 'clickaway') {
       return;
     }
 
     SnackbarStore.toHideSnackBar();
   };
+  
+  const TransitionUp = (props: Omit<SlideProps, 'direction'>) => {
+    return <Slide {...props} direction="up" />;
+  }
+  
+  // export default function MyComponent() {
+  //   return <Snackbar TransitionComponent={TransitionLeft} />;
+  // }
 
   return (
     <>
@@ -51,13 +61,18 @@ function App() {
           <Route path='*' element={<Navigate replace to="/auth" />} />
         </Routes>
         {isLoadingStore.isLoading && <Loader />}
-        <Snackbar open={!!SnackbarStore.message} autoHideDuration={6000}
+        <Snackbar open={!!SnackbarStore.message} autoHideDuration={VariableConstants.snackbarDuration}
                   onClose={handleSnackBarClose} 
                   anchorOrigin={{
                     vertical: "bottom",
                     horizontal: "right"
-                  }}>
-          <Alert severity={SnackbarStore.type}>{SnackbarStore.message}</Alert>
+                  }}
+                  TransitionComponent={TransitionUp}>
+          <Alert severity={SnackbarStore.type}>
+            <p dangerouslySetInnerHTML={{
+                  __html: SnackbarStore.message
+                }} style={{display: 'contents'}}></p>
+          </Alert>
         </Snackbar>
       </div>
       <Footer /> 

@@ -10,6 +10,8 @@ class SnackBarStore {
     }
 
     toShowSnackBar (message: string = '', type: AlertColor): void{
+        if (this.message) this.toHideSnackBar()
+        
         this.message = message || 'Something went wrong, please try again later';
         this.type = type;
     }
