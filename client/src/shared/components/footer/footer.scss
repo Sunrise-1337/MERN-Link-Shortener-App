@@ -1,0 +1,17 @@
+.footer{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: gray;
+
+    &__wrap{
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row !important;
+    }
+
+    h4, p{
+        color: white !important;
+        width: fit-content;
+    }
+}

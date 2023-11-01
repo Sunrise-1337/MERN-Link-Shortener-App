@@ -1,4 +1,36 @@
 .header{
     height: 60px;
     background-color: grey;
+
+    &__wrap{
+        flex-direction: row !important;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__nav{
+        display: flex;
+        gap: 40px;
+    }
+
+    h3{
+        flex: 1;
+    }
+
+    &__actions{
+        flex: 1;
+        display: flex;
+        gap: 20px;
+        justify-content: flex-end;
+    }
+
+    a{
+        color: white !important;
+    }
+
+    svg{
+        margin-left: auto;
+        cursor: pointer;
+        margin-top: 4px;
+    }
 }
