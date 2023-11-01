@@ -25,8 +25,16 @@ export const LinksTableComponent = (props: LinksTablePropsInterface) => {
                         <TableCell component="th" scope="row">
                             {index + 1}
                         </TableCell>
-                        <TableCell>{link.fullLink}</TableCell>
-                        <TableCell>{link.shortLink}</TableCell>
+                        <TableCell>
+                            <Link to={link.fullLink}>
+                                {link.fullLink}
+                            </Link>
+                        </TableCell>
+                        <TableCell>
+                            <Link to={link.shortLink}>
+                                {link.shortLink}
+                            </Link>
+                        </TableCell>
                         <TableCell>
                             <Link to={UrlConstants.details + link.id}>
                                 Open

@@ -12,6 +12,8 @@ app.use(express.json())
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/links', require('./routes/links.routes'))
 
+app.use('/to', require('./routes/redirect.routes'))
+
 const PORT = config.get('port') || 8080
 
 async function start() {
