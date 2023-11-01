@@ -1,0 +1,26 @@
+.details{
+    padding: 50px 0;
+    text-wrap: wrap !important;
+    word-break: break-all;
+
+    h3{
+        margin-bottom: 20px !important;
+        font-weight: 500 !important;
+    }
+    
+    h4{
+        margin-bottom: 5px !important;
+    }
+
+    h4:last-of-type {
+        margin-bottom: 35px !important;
+    }
+
+    .strong{
+        font-weight: bold;
+    }
+
+    &__link{
+        margin-top: 30px !important;
+    }
+}

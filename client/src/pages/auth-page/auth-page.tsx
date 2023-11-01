@@ -12,10 +12,22 @@ import SnackbarStore from '../../stores/snackbar.store';
 import { toLogin, toRegister } from '../../helpers/api.helper';
 import isLoggedInStore from '../../stores/isLoggedIn.store';
 import { useNavigate } from 'react-router-dom';
+import { SnackbarTypesConstants } from '../../constants/snackbar-types.constants';
+import { setCookie } from '../../helpers/cookies.helper';
+import { CookiesConstants } from '../../constants/cookies.constants';
+import { VariableConstants } from '../../constants/variables.constants';
+import { UrlConstants } from '../../constants/url.constants';
+import { useEffect } from 'react';
 
 export const AuthPage = () => {
     const form = useForm(),
           navigate = useNavigate()
+
+    useEffect(() => {
+        if (isLoggedInStore.isLoggedIn) {
+            navigate(UrlConstants.links)
+        }
+    }, [])
 
     const authProcessHandler = (action: "login" | "signup"): void => {
         const { email, password } = form.errors;
@@ -23,21 +35,31 @@ export const AuthPage = () => {
         const values = form.values;
     
         if (!email && !password && isFormDirty) {
-            const requestFunction = action === "login" ? toLogin : toRegister;
 
-            requestFunction(values)
-                .then(res => {
-                    SnackbarStore.toShowSnackBar(res.message, "success");
-                    isLoggedInStore.toSetLoggedInTrue();
-                    navigate('/links')
-                });
+            if (action === "login") {
+                toLogin(values)
+                    .then(res => {
+                        SnackbarStore.toShowSnackBar(res.message, SnackbarTypesConstants.success);
+                        setCookie(CookiesConstants.token, res.token, VariableConstants.cookieExpireHours)
+                        isLoggedInStore.toSetLoggedInTrue();
+                        navigate(UrlConstants.shorten)
+                    });
+            } else {
+                toRegister(values)
+                    .then(res => {
+                        SnackbarStore.toShowSnackBar(res.message, SnackbarTypesConstants.success);
+                    });
+            }
+
         } else {
             const errorIfDirty = (email ? email + '<br />' : '') + (password || '');
             const errorIfPristine = 'Please, fill the form first';
     
-            SnackbarStore.toShowSnackBar(isFormDirty ? errorIfDirty : errorIfPristine, "error");
+            SnackbarStore.toShowSnackBar(isFormDirty ? errorIfDirty : errorIfPristine, SnackbarTypesConstants.error);
         }
     };
+
+    
     
     return (
         <div className="auth page">

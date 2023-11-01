@@ -27,7 +27,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

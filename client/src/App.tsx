@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import {Routes, Route, Navigate} from "react-router-dom"
+import {Routes, Route, Navigate, useNavigate} from "react-router-dom"
 
 import './App.scss'
 
@@ -13,7 +13,7 @@ import isLoadingStore from './stores/isLoading.store';
 
 import { AuthPage } from './pages/auth-page/auth-page';
 import { CreatePage } from './pages/create-page/create-page';
-import { DetailPage } from './pages/detail-page/detail-page';
+import { DetailPage } from './pages/details-page/details-page';
 import { LinksPage } from './pages/links-page/links-page';
 import { Footer } from './shared/components/footer/footer';
 import { Header } from './shared/components/header/header';
@@ -25,10 +25,19 @@ import { VariableConstants } from './constants/variables.constants';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Slide, { SlideProps } from '@mui/material/Slide';
+import { UrlConstants } from './constants/url.constants';
+import { getCookie } from './helpers/cookies.helper';
+import { CookiesConstants } from './constants/cookies.constants';
 
 function App() {
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // isLoggedIn = false
+    if (getCookie(CookiesConstants.token)) {
+      isLoggedInStore.toSetLoggedInTrue()
+    } else {
+      navigate(UrlConstants.auth)
+    }
   }, [])
 
   const handleSnackBarClose = (_event: React.SyntheticEvent | Event, reason?: string): void => {
@@ -39,26 +48,22 @@ function App() {
     SnackbarStore.toHideSnackBar();
   };
   
-  const TransitionUp = (props: Omit<SlideProps, 'direction'>) => {
+  const transitionDirectionUp = (props: Omit<SlideProps, 'direction'>) => {
     return <Slide {...props} direction="up" />;
   }
-  
-  // export default function MyComponent() {
-  //   return <Snackbar TransitionComponent={TransitionLeft} />;
-  // }
 
   return (
     <>
       <Header />
       <div className="container">
         <Routes>
-          <Route path="/auth" element={<AuthPage />} />
+          <Route path={UrlConstants.auth} element={<AuthPage />} />
           ({isLoggedInStore.isLoggedIn} &&
-              <Route path="/create" element={<CreatePage />} />
-              <Route path="/detail/:id" element={<DetailPage />} />
-              <Route path="/links" element={<LinksPage />} />
+              <Route path={UrlConstants.shorten} element={<CreatePage />} />
+              <Route path={UrlConstants.details + ':id'} element={<DetailPage />} />
+              <Route path={UrlConstants.links} element={<LinksPage />} />
           )
-          <Route path='*' element={<Navigate replace to="/auth" />} />
+          <Route path='*' element={<Navigate replace to={UrlConstants.auth} />} />
         </Routes>
         {isLoadingStore.isLoading && <Loader />}
         <Snackbar open={!!SnackbarStore.message} autoHideDuration={VariableConstants.snackbarDuration}
@@ -67,7 +72,7 @@ function App() {
                     vertical: "bottom",
                     horizontal: "right"
                   }}
-                  TransitionComponent={TransitionUp}>
+                  TransitionComponent={transitionDirectionUp}>
           <Alert severity={SnackbarStore.type}>
             <p dangerouslySetInnerHTML={{
                   __html: SnackbarStore.message

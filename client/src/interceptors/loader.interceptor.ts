@@ -1,4 +1,4 @@
-import { LoaderService } from "../../../services/loader.service";
+import { LoaderService } from "../services/loader.service";
 import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 export const loaderRequestInterceptorLogic = [

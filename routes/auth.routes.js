@@ -5,7 +5,7 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const router = Router()
-const { toConcatErrors, toHandleValidationErrors } = require('./helpers/error-handling.helper')
+const { toHandleValidationErrors } = require('./helpers/error-handling.helper')
 
 // /api/auth
 router.post(
@@ -110,7 +110,7 @@ function toGetJwtToken(id) {
         },
         config.get('jwtSecretKey'),
         { 
-            expiresIn: '1h'
+            expiresIn: '7h'
         }
     )
 }

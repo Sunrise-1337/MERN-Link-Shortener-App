@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import { AuthFormSchema } from "../configs/yup/auth.schema";
+import { AuthFormSchema } from "../configs/yup/schemas/auth.schema";
 
 function useForm() {
     const form = useFormik({
