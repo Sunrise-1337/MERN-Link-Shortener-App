@@ -9,8 +9,9 @@ import isLoggedInStore from '../../../stores/login.store';
 import SnackbarStore from '../../../stores/snackbar.store';
 import { SnackbarMessagesConstants } from '../../../constants/snackbar-messages.constants';
 import { SnackbarTypesConstants } from '../../../constants/snackbar-types.constants';
+import { observer } from 'mobx-react-lite';
 
-export const Header = () => {
+const Header = () => {
     const navigate = useNavigate();
 
     const onLogOut = (): void => {
@@ -47,3 +48,5 @@ export const Header = () => {
         </header>
     )
 }
+
+export default observer(Header)

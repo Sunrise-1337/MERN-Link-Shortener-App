@@ -1,12 +1,21 @@
 import './loader.scss'
 
-export const Loader = () => {
+import LoaderStore from "../../../stores/loader.store"
+import { observer } from 'mobx-react-lite'
+
+const Loader = () => {
 
     return (
-        <div className="loader">
-            <div className="loader__spinner-container">
-                <span className="loader__spinner"></span>
-            </div>
-        </div>
+        LoaderStore.isLoading
+            ?
+                <div className="loader">
+                    <div className="loader__spinner-container">
+                        <span className="loader__spinner"></span>
+                    </div>
+                </div>        
+            :
+                <></>
     )
 }
+
+export default observer(Loader)
