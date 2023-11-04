@@ -8,11 +8,11 @@ import { observer } from 'mobx-react-lite'
 
 
 import SnackbarStore from './stores/snackbar.store';
-import isLoggedInStore from './stores/isLoggedIn.store';
-import isLoadingStore from './stores/isLoading.store';
+import isLoggedInStore from './stores/login.store';
+import LoaderStore from './stores/loader.store';
 
 import { AuthPage } from './pages/auth-page/auth-page';
-import { CreatePage } from './pages/create-page/create-page';
+import { ShortenPage } from './pages/shorten-page/shorten-page';
 import { DetailPage } from './pages/details-page/details-page';
 import { LinksPage } from './pages/links-page/links-page';
 import { Footer } from './shared/components/footer/footer';
@@ -58,14 +58,16 @@ function App() {
       <div className="container">
         <Routes>
           <Route path={UrlConstants.auth} element={<AuthPage />} />
-          ({isLoggedInStore.isLoggedIn} &&
-              <Route path={UrlConstants.shorten} element={<CreatePage />} />
+          {isLoggedInStore.isLoggedIn &&
+            <>
+              <Route path={UrlConstants.shorten} element={<ShortenPage />} />
               <Route path={UrlConstants.details + ':id'} element={<DetailPage />} />
               <Route path={UrlConstants.links} element={<LinksPage />} />
-          )
+            </>
+          }
           <Route path='*' element={<Navigate replace to={UrlConstants.auth} />} />
         </Routes>
-        {isLoadingStore.isLoading && <Loader />}
+        {LoaderStore.isLoading && <Loader />}
         <Snackbar open={!!SnackbarStore.message} autoHideDuration={VariableConstants.snackbarDuration}
                   onClose={handleSnackBarClose} 
                   anchorOrigin={{

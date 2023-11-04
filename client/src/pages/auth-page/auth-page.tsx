@@ -10,7 +10,7 @@ import useForm from '../../hooks/useForm';
 
 import SnackbarStore from '../../stores/snackbar.store';
 import { toLogin, toRegister } from '../../helpers/api.helper';
-import isLoggedInStore from '../../stores/isLoggedIn.store';
+import isLoggedInStore from '../../stores/login.store';
 import { useNavigate } from 'react-router-dom';
 import { SnackbarTypesConstants } from '../../constants/snackbar-types.constants';
 import { setCookie } from '../../helpers/cookies.helper';
@@ -27,14 +27,16 @@ export const AuthPage = () => {
         if (isLoggedInStore.isLoggedIn) {
             navigate(UrlConstants.links)
         }
+
+        
     }, [])
 
     const authProcessHandler = (action: "login" | "signup"): void => {
-        const { email, password } = form.errors;
-        const isFormDirty = form.dirty;
-        const values = form.values;
+        const errors = form.errors,
+              isFormDirty = form.dirty,
+              values = form.values;
     
-        if (!email && !password && isFormDirty) {
+        if (!errors.email && !errors.password && isFormDirty) {
 
             if (action === "login") {
                 toLogin(values)
@@ -52,8 +54,9 @@ export const AuthPage = () => {
             }
 
         } else {
-            const errorIfDirty = (email ? email + '<br />' : '') + (password || '');
-            const errorIfPristine = 'Please, fill the form first';
+            const { email, password } = errors,
+                  errorIfDirty = (email ? email + '<br />' : '') + (password || ''),
+                  errorIfPristine = 'Please, fill the form first';
     
             SnackbarStore.toShowSnackBar(isFormDirty ? errorIfDirty : errorIfPristine, SnackbarTypesConstants.error);
         }
@@ -72,11 +75,11 @@ export const AuthPage = () => {
                     <TextField id="outlined-basic" label="Email" 
                                variant="outlined" className='auth__input'
                                name='email' value={form.values.email}
-                               onChange={form.handleChange}/>
+                               onChange={form.handleChange} InputLabelProps={{ shrink: true }} />
                     <TextField id="outlined-basic" label="Password" 
                                variant="outlined" className='auth__input' type='password'
                                name='password' value={form.values.password}
-                               onChange={form.handleChange}/>
+                               onChange={form.handleChange} InputLabelProps={{ shrink: true }} />
                 </CardContent>
                 <CardActions>
                     <Button size="medium" variant="contained"

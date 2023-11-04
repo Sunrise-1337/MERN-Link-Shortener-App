@@ -1,9 +1,9 @@
-import { LoaderService } from "../services/loader.service";
+import LoaderStore from "../stores/loader.store"
 import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 export const loaderRequestInterceptorLogic = [
     (request: InternalAxiosRequestConfig<any>) => {
-        LoaderService.getInstance().toShowLoader()
+        LoaderStore.toShowLoader()
 
         return request
     }
@@ -11,7 +11,7 @@ export const loaderRequestInterceptorLogic = [
 
 export const loaderResponseInterceptorLogic = [
     (response: AxiosResponse<any, any>) => {
-        LoaderService.getInstance().toHideLoader()
+        LoaderStore.toHideLoader()
 
         return response;
     }

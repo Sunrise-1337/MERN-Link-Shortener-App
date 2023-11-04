@@ -37,7 +37,6 @@ router.post(
             res.status(201).json(link)
 
         } catch (e) {
-            console.log(e)
             res.status(500).json({message: "Something went wrong. Try again later"})
         }
     }
@@ -48,7 +47,6 @@ router.get(
     tokenMiddleware,
     async (req, res) => {
         try {
-            console.log(req.user)
             const links = await Link.find({
                 creator: req.user.userId,
             })

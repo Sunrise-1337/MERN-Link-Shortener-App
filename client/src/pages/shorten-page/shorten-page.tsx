@@ -1,4 +1,4 @@
-import './create-page.scss'
+import './shorten-page.scss'
 
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
@@ -10,7 +10,7 @@ import { toSendLinkToShorten } from '../../helpers/api.helper'
 import { useNavigate } from 'react-router-dom'
 import { UrlConstants } from '../../constants/url.constants'
 
-export const CreatePage = () => {
+export const ShortenPage = () => {
     const [link, setLink] = useState<string>(''),
           navigate = useNavigate();
 
@@ -28,13 +28,13 @@ export const CreatePage = () => {
     }
     
     return (
-        <div className="create page">
-            <Card className='create__card'>
+        <div className="shorten page">
+            <Card className='shorten__card'>
                 <CardContent>
                     <Typography variant="h2" component="div" className='auth__title'>
                         Shorten the link
                     </Typography>
-                    <div className="create__card-lower-row">
+                    <div className="shorten__card-lower-row">
                         <TextField id="outlined-basic" label="Link to shorten" 
                                 variant="outlined"
                                 name='Link to shorten' value={link}
@@ -42,7 +42,7 @@ export const CreatePage = () => {
                                 onKeyDown={e => enterHandler(e.code)}/>
 
                         <Button size="medium" variant="contained"
-                                className='create__card-btn'
+                                className='shorten__card-btn'
                                 onClick={() => toShortenLink()}>Shorten</Button> 
                     </div>
                 </CardContent>
